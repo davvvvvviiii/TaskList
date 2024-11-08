@@ -1,12 +1,7 @@
 package Lenovo.pl;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.Scanner;
-
 import static Lenovo.pl.Methods.*;
 
 public class Main {
@@ -24,11 +19,14 @@ public class Main {
             String input = scanner.nextLine();
             switch (input) {
                 case "exit":
+                    System.out.println(ConsoleColors.RED + "Bye, bye.");
+                    System.exit(0);
                     break;
                 case "add":
                     addTask();
                     break;
                 case "remove":
+                    removeTask(tasks, FILE_NAME);
                     break;
                 case "list":
                     printTab(tasks);

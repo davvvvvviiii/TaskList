@@ -1,5 +1,7 @@
 package Lenovo.pl;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class Methods {
 
@@ -30,9 +33,7 @@ public class Methods {
 
         for (int i = 0; i < strings.size(); i++) {
             String[] split = strings.get(i).split(",");
-            for (int j = 0; j < split.length; j++) {
-                tab[i][j] = split[j];
-            }
+            System.arraycopy(split, 0, tab[i], 0, split.length);
         }
         return tab;
     }
@@ -76,6 +77,31 @@ public class Methods {
 
         Files.write(path, content.toString().getBytes());
         System.out.println("Tasks saved to file.");
+    }
+
+    public static void removeTask(String[][] tab, String fileName) throws IOException {
+        for (int i = 0; i < tab.length; i++) {
+            System.out.print(i + " : ");
+            for (int j = 0; j < tab[i].length; j++) {
+                System.out.print(tab[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("Select task to remove");
+        Scanner scanner = new Scanner(System.in);
+
+        int taskNumber = scanner.nextInt();
+
+        tab = ArrayUtils.remove(tab, taskNumber);
+
+        StringBuilder content = new StringBuilder();
+        for (String[] task : tab) {
+            content.append(String.join(",", task)).append("\n");
+        }
+
+        Files.write(Paths.get(fileName), content.toString().getBytes());
+        System.out.println("Task removed and file updated successfully.");
+
     }
 
 }
